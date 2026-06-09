@@ -6,9 +6,8 @@ from app.database import Base
 class User(Base):   
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String(100), nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     activo = Column(Boolean, default=True)
     creado_en = Column(DateTime(timezone=True), server_default=func.now())
-
-    
