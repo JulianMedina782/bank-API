@@ -1,16 +1,18 @@
 from fastapi import FastAPI
-from app.database import engine, Base 
+from app.database import engine, Base
 from app.models import user, account
-from app.routers import users
+from app.routers import users, accounts
 
 Base.metadata.create_all(bind=engine)
+
 app = FastAPI(
-    title="Bank API",       
-    description= "API bancaria con Python, FastAPI y PostgreSQL",
+    title="Bank API",
+    description="API bancaria con Python, FastAPI y PostgreSQL",
     version="1.0.0"
 )
 
 app.include_router(users.router)
+app.include_router(accounts.router)
 
 @app.get("/")
 def read_root():
