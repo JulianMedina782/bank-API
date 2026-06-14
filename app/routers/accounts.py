@@ -6,6 +6,7 @@ from app.schemas.account import AccountCreate, AccountResponse
 from fastapi.security import OAuth2PasswordBearer
 from app.auth import verificar_token
 import uuid
+from typing import List
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
@@ -36,3 +37,15 @@ def crear_cuenta(
     db.refresh(nueva_cuenta)
     
     return nueva_cuenta
+
+@router.get("/me", response_model=List[AccountResponse])
+def obtener_usuario_actual(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    payload = verificar_token(token)
+    user_id = payload.get("sub")
+    
+    cuentas = db.query(Account).filter(Account.user_id == int(user_id)).all()
+    
+    return cuentas

@@ -9,6 +9,7 @@ from app.utils import verificar_password
 from fastapi.security import OAuth2PasswordBearer
 from app.auth import verificar_token
 
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
 router = APIRouter(
@@ -48,6 +49,7 @@ def login(usuario: UserLogin, db: Session = Depends(get_db)):
     token = crear_token({"sub": str(db_user.id), "email": db_user.email})
     
     return {"access_token": token, "token_type": "bearer"}
+
 
 @router.get("/me", response_model=UserResponse)
 def obtener_usuario_actual(
