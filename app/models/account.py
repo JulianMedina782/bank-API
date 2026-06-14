@@ -13,3 +13,4 @@ class Account(Base):
     creado_en = Column(DateTime(timezone=True), server_default=func.now())
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     usuario = relationship("User", back_populates="cuentas")
+    transacciones = relationship("Transaction", back_populates="cuenta")
