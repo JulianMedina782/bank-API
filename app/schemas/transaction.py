@@ -17,3 +17,9 @@ class TransactionResponse(BaseModel):
     account_id: int
     class Config:
         from_attributes = True
+
+class TransferCreate(BaseModel):
+    account_id_origen: int
+    account_id_destino: int
+    monto: Decimal
+    descripcion: str
